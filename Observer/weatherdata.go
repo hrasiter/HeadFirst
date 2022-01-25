@@ -1,7 +1,5 @@
 package observer
 
-import "sort"
-
 type WeatherData struct {
 	observers []Observer
 	temp      float64
@@ -16,7 +14,9 @@ func NewWeatherData() *WeatherData {
 }
 
 func (w *WeatherData) Notify() {
-
+	for _, d := range w.observers {
+		d.Update(w.temp, w.humidity, w.pressure)
+	}
 }
 
 func (w *WeatherData) RegisterObserver(o Observer) {
@@ -24,19 +24,24 @@ func (w *WeatherData) RegisterObserver(o Observer) {
 }
 
 func (w *WeatherData) RemoveObserver(o Observer) {
-	i := sort.Search(len(w.observers), func(i int) bool {
-		return w.observers[i] == o
-	})
+	// i := sort.Search(len(w.observers), func(i int) bool {
+	// 	return w.observers[i] == o
+	// })
 
-	w.remove(i)
+	for i, _ := range w.observers {
+		if w.observers[i] == o {
+			w.remove(i)
+			return
+		}
+	}
 }
 
 func (w *WeatherData) SetTemp(temp float64) {
-
+	w.temp = temp
 }
 
 func (w *WeatherData) MeasurementsChanged() {
-
+	w.Notify()
 }
 
 func (w *WeatherData) remove(i int) {

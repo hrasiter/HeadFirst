@@ -6,8 +6,8 @@ func Test_Observer(t *testing.T) {
 	t.Run("test publish subsribe", func(t *testing.T) {
 
 		s := NewWeatherData()
-		o1 := &CurrentConditionDisplay{s}
-		o2 := &StatisticDisplay{s}
+		o1 := NewCurrentConditionDisplay(s)
+		o2 := NewStatisticDisplay(s)
 
 		s.SetTemp(10.0)
 

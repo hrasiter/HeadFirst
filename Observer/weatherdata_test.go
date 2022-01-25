@@ -1,14 +1,24 @@
 package observer
 
 import (
+	"strconv"
 	"testing"
 )
 
 type MockObserver struct {
+	temp float64
+	hum  float64
+	pres float64
 }
 
-func (o *MockObserver) Update(float64, float64, float64) {
+func (o *MockObserver) Update(temp float64, humidity float64, press float64) {
+	o.temp = temp
+	o.hum = humidity
+	o.pres = press
+}
 
+func (o *MockObserver) Display() string {
+	return strconv.FormatFloat(o.temp, 'f', -1, 64)
 }
 
 func Test_WeatherData(t *testing.T) {
