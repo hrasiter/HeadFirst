@@ -1,0 +1,6 @@
+package factorymethod
+
+type PizzaStoreInterface interface {
+	CreatePizza(t string) Pizza
+	OrderPizza(t string) Pizza
+}
